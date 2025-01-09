@@ -1,0 +1,10 @@
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h2 class="pb-2 border-bottom">Actividades mas populares</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <ng-container *ngFor="let p of profiles; let i = index">
+                <app-activity-card [profile]="p"></app-activity-card>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="container" style="margin: 40px auto;">
+    <div class="row">
+        <div class="col-7">
+            <div class="row">
+                <h1>{{profile.title}}</h1>
+            </div>
+            <div class="row mb-3">
+                <img src={{profile.mainImage}}>
+            </div>
+            <hr>
+            <div class="row">
+                <h3>Descripción general</h3>
+                <p>{{profile.description}}</p>
+            </div>
+        </div>
+        <div class="col-5 ps-5">
+            <div class="row mb-3 ">
+                <small class="text-body-secondary fw-light fs-5">Precio final por {{peopleDetail}}</small>
+                <span class="card-title pricing-card-title fs-2 fw-semibold">${{formatNumber(finalPrice)}}</span>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 mb-2">
+                    <label for="date" class="form-label">Fecha</label>
+                    <input type="text" value={{selectedDateFormat}} class="form-control" (click)="toggleCollapse()"
+                        placeholder="dd/mm/aaaa" readonly>
+                    <div class="invalid-feedback">
+                        Valid first name is required.
+                    </div>
+
+                    <div class="collapse mt-2" id="collapseFormDate" [ngClass]="{'show': !isCollapsed}">
+                        <app-calendar [availableDays]="availableDays"
+                            (dateSelectionEvent)="sendSelectedDate($event)"></app-calendar>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 mb-2">
+                    <label for="lastName" class="form-label">Hora</label>
+                    <select class="form-select" [(ngModel)]="selectedHour" (ngModelChange)="onSelectHourChange()"
+                        [disabled]="!hoursInputEnabled">
+                        <option [ngValue]="undefined" [disabled]="true">Seleccione una hora</option>
+                        <option *ngFor="let hour of selectHoursValues; let i = index" [value]="hour">
+                            {{hour}}</option>
+                    </select>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label for="email" class="form-label">Cantidad de personas</label>
+                    <input class="form-control" type="text" value={{amountOfPeople}} aria-label="readonly input example"
+                        data-bs-toggle="collapse" data-bs-target="#collapseFormPeople" readonly>
+
+                    <div class="collapse mt-2" id="collapseFormPeople">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>
+                                        <p class="fs-5 fw-semibold mb-0">Adultos</p>
+                                        <p class="fs-6 text-body-secondary">13 años o más</p>
+                                    </span>
+                                </div>
+                                <div class="col-7">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            [disabled]="!subAdultBtnEnabled" (click)="subtractAdult()">-</button>
+                                        <span class="mx-4 text-center">{{adultCounter}}</span>
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            [disabled]="!addAdultBtnEnabled" (click)="addAdult()">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>
+                                        <p class="fs-5 fw-semibold mb-0">Menores</p>
+                                        <p class="fs-6 text-body-secondary">0 a 12 años</p>
+                                    </span>
+                                </div>
+                                <div class="col-7">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            [disabled]="!subChildBtnEnabled" (click)="subtractChild()">-</button>
+                                        <span class="mx-4 btn-outline-secondary text-center">{{childCounter}}</span>
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            [disabled]="!addChildBtnEnabled" (click)="addChild()">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFormPeople" (click)="checkAvailability()">Aplicar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3" *ngIf="isAvailable; else notAvailableContent">
+                <button type="button" class="btn btn-secondary btn-lg" (click)="startReservation()">Reservar
+                    ahora</button>
+            </div>
+            <ng-template #notAvailableContent>
+                <div class="row">
+                    <button type="button" class="btn btn-secondary btn-lg" (click)="startReservation()"
+                        [disabled]="!isAvailable">Reservar ahora</button>
+                    <div class="alert alert-danger mt-3" role="alert">
+                        No hay lugares disponibles!
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

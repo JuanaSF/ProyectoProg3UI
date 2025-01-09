@@ -1,0 +1,13 @@
+<div class="col">
+    <div class="card shadow-sm">
+        <img src={{profile.mainImage}} style="object-fit: cover;" class="card-img-top card-img-top" width="100%"
+            height="225" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{profile.title}}</h5>
+            <p class="card-text fw-light">A partir de $<span
+                    class="card-text fs-4 fw-semibold">{{formatNumber(profile.price)}}</span></p>
+            <button type="button" class="btn btn-sm btn-secondary" routerLink="activity/{{profile.id}}">Ver
+                Actividad</button>
+        </div>
+    </div>
+</div>
